@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SaltContext } from '../../context/SaltContext';
 
-const SearchBar = ({ isEmpty, setIsEmpty }) => {
+const SearchBar = ({ isEmpty, setIsEmpty, setIsLoading }) => {
   const [searchText, setSearchText] = useState("")
 
   const { setAllSaltData } = useContext(SaltContext)
@@ -12,6 +12,7 @@ const SearchBar = ({ isEmpty, setIsEmpty }) => {
     if(searchText.length !== 0){
     try {
       setIsEmpty(false);
+      setIsLoading(true)
 
       const response = await fetch(
         `https://backend.cappsule.co.in/api/v1/new_search?q=${searchText}&pharmacyIds=1,2,3`
@@ -26,6 +27,8 @@ const SearchBar = ({ isEmpty, setIsEmpty }) => {
       return; 
     } catch (error) {
       console.error('Error fetching data:', error);
+    }finally{
+      setIsLoading(false)
     }
   }else{
     console.log("Search is empty")
@@ -41,7 +44,7 @@ const SearchBar = ({ isEmpty, setIsEmpty }) => {
     <div className='max-w-5xl w-full h-16 rounded-[36px] shadow-center flex justify-between items-center px-8 my-8 mx-auto'>
       <div className='flex-grow items-center flex'>
         {!isEmpty ?
-          <span onClick={handleBackOnClick}>
+          <span onClick={handleBackOnClick} className='cursor-pointer'>
             <ArrowBackIcon />
           </span>
           :
