@@ -172,7 +172,7 @@ const Card = ({ card }) => {
 const OptionSection = ({ title, options, selectedOption, isAvailable, handleChange, showMore, setShowMore }) => (
     <div className="flex mb-4">
         <div className="text-base w-[86px] text-start mx-2">{title}:</div>
-        <div className="flex flex-col">
+        <div className="flex flex-col max-w-[450px]">
             {chunkArray(showMore ? options : options.slice(0, 4), 2).map((optionRow, rowIndex) => (
                 <div key={rowIndex} className="flex">
                     {optionRow.map((option, index) => (
